@@ -1,0 +1,17 @@
+[
+    {
+        "name": "3 for 2 Apple TV Deal",
+        "class": "AppleTV",
+        "active": true
+    },
+    {
+        "name": "Promotion IPad",
+        "class": "SuperIPad",
+        "active": true
+    },
+    {
+        "name": "MacBook Pro Free Gift",
+        "class": "MacBookPro",
+        "active": true
+    }
+]
