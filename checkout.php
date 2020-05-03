@@ -148,14 +148,12 @@ class MacBookPro implements PromotionInterface
     {
         $totalFreeVGA = 0;
 
-        foreach ($cart['products'] as $index => $product) {
-            // for every MacBook Pro, a free VGA cable unit is added
-            if ($product['sku'] === $this->sku) $totalFreeVGA++;
-        }
+        // for every MacBook Pro, a free VGA cable unit is added
+        $totalFreeVGA = $this->countTotalMacBook($cart['products']);
 
+        // if there is already an existing VGA cable in cart,
+        // decrement the count of total free VGA to be given
         foreach ($cart['products'] as $index => $product) {
-            // if there is already an existing VGA cable in cart,
-            // decrement the count of total free VGA to be given
             if ($product['sku'] === $this->freeGiftSKU) {
                 if ($totalFreeVGA > 0) {
                     $cart['products'][$index]['actualPrice'] = 0;
@@ -175,6 +173,18 @@ class MacBookPro implements PromotionInterface
 
         $cart['products'] = array_merge($cart['products'], $freeGifts);
         return $cart;
+    }
+
+    private function countTotalMacBook ($products) 
+    {
+        $totalMacbook = 0;
+
+        foreach ($products as $index => $product) {
+            // for every MacBook Pro, a free VGA cable unit is added
+            if ($product['sku'] === $this->sku) $totalMacbook++;
+        }
+
+        return $totalMacbook;
     }
 }
 
