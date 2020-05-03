@@ -151,13 +151,17 @@ class MacBookPro implements PromotionInterface
         foreach ($cart['products'] as $index => $product) {
             // for every MacBook Pro, a free VGA cable unit is added
             if ($product['sku'] === $this->sku) $totalFreeVGA++;
+        }
 
+        foreach ($cart['products'] as $index => $product) {
             // if there is already an existing VGA cable in cart,
-            // decrement the count of total free VGA to be given,
-            // instead, set the price to 0
+            // decrement the count of total free VGA to be given
             if ($product['sku'] === $this->freeGiftSKU) {
+                if ($totalFreeVGA > 0) {
+                    $cart['products'][$index]['actualPrice'] = 0;
+                }
+
                 $totalFreeVGA--;
-                $cart['products'][$index]['actualPrice'] = 0;
             }
         }
 
@@ -310,6 +314,17 @@ $checkout = new Checkout();
 $checkout->scan('mbp');
 $checkout->scan('ipd');
 $checkout->scan('vga');
+$checkout->total();
+
+echo PHP_EOL.PHP_EOL.PHP_EOL;
+
+echo "test scenario 4".PHP_EOL;
+$checkout = new Checkout();
+$checkout->scan('vga');
+$checkout->scan('vga');
+$checkout->scan('vga');
+$checkout->scan('mbp');
+$checkout->scan('mbp');
 $checkout->total();
 
 echo PHP_EOL.PHP_EOL.PHP_EOL;
